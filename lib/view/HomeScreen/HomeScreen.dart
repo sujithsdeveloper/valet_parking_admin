@@ -58,7 +58,6 @@ class Homescreen extends StatelessWidget {
   }
 }
 
-
 class Home extends StatelessWidget {
   const Home({
     super.key,
@@ -214,8 +213,36 @@ class Home extends StatelessWidget {
                                           )),
                                           PopupMenuItem(
                                               onTap: () {
-                                                proRead.deleteData(
-                                                    data, context);
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                    title: Text(
+                                                        'This processes cannot be reversed'),
+                                                    content:
+                                                        Text('Are you sure?'),
+                                                    actions: [
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child:
+                                                              Text('Cancel')),
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            proRead.deleteData(
+                                                                data, context);
+                                                          },
+                                                          child: Text(
+                                                            'Delete',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red),
+                                                          ))
+                                                    ],
+                                                  ),
+                                                );
                                               },
                                               child: Row(
                                                 children: [

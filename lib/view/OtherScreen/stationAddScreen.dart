@@ -38,6 +38,7 @@ class _StationaddscreenState extends State<Stationaddscreen> {
     final locationCorrdinates = TextEditingController();
     final pricePerHourController = TextEditingController();
     final imageUrlController = TextEditingController();
+    final codeController = TextEditingController();
     final key = GlobalKey<FormState>();
     final proWatch = context.watch<Crudoperationcontoller>();
 
@@ -93,21 +94,21 @@ class _StationaddscreenState extends State<Stationaddscreen> {
                 heading: 'Price Per Hour',
               ),
               SizedBox(height: 20),
-              Column(
-                  children: List.generate(
-                context.watch<Widgetcontroller>().numberOfFeild,
-                (index) => TextfeildWidget(
-                  controller: imageUrlController,
-                  label: 'Image URL',
-                  validation: (p0) => Validations.priceValidation(p0),
-                  keyboardType: TextInputType.text,
-                  wantHeading: true,
-                  heading: 'Image',
-                ),
-              )),
-              SizedBox(
-                height: 9,
+              TextfeildWidget(
+                controller: imageUrlController,
+                label: 'Image URL',
+                validation: (p0) => Validations.priceValidation(p0),
+                keyboardType: TextInputType.text,
+                wantHeading: true,
+                heading: 'Image',
               ),
+              SizedBox(height: 20),
+              TextfeildWidget(
+                  keyboardType: TextInputType.number,
+                  heading: 'Create a code for your station',
+                  wantHeading: true,
+                  controller: codeController,
+                  label: 'Code'),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,6 +122,7 @@ class _StationaddscreenState extends State<Stationaddscreen> {
                             onTap: () {
                               if (key.currentState!.validate()) {
                                 context.read<Crudoperationcontoller>().addData(
+                                    code: int.parse(codeController.text),
                                     context: context,
                                     stationName: stationNameController.text,
                                     price: pricePerHourController.text,
@@ -132,6 +134,7 @@ class _StationaddscreenState extends State<Stationaddscreen> {
                                 locationCorrdinates.clear();
                                 numberOfSlotsController.clear();
                                 imageUrlController.clear();
+                                codeController.clear();
                               }
                             },
                             width: 250),

@@ -15,6 +15,7 @@ class Crudoperationcontoller extends ChangeNotifier {
     required String price,
     required String numberOfSlots,
     required String location,
+    required int code,
     required BuildContext context,
   }) async {
     isLoading = true;
@@ -26,6 +27,7 @@ class Crudoperationcontoller extends ChangeNotifier {
         'price_per_hour': price,
         'rating': 4,
         'number_of_slots': numberOfSlots,
+        'code':code
       };
 
       CollectionReference adminStations = FirebaseFirestore.instance
