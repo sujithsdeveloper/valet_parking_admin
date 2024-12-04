@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "930742979280",
+    "project_id": "valet-parking-96fdf",
+    "storage_bucket": "valet-parking-96fdf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930742979280:android:9d86d16329b234d9846cd5",
+        "android_client_info": {
+          "package_name": "com.sujith.valet_parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930742979280-ftu5ama3je4id94dgfhr5ptrgsf7v1om.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sujith.valet_parking",
+            "certificate_hash": "057ab6a0c2990bf48812e41a01d2177a6c2cffc0"
+          }
+        },
+        {
+          "client_id": "930742979280-v2sji1ep1uhro4sooepgu2ob58i4n8r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYG4CaDb6vLUVpCZg2wzkEAzj47mKdUos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930742979280-v2sji1ep1uhro4sooepgu2ob58i4n8r1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930742979280:android:66edd13b99bff032846cd5",
+        "android_client_info": {
+          "package_name": "com.sujith.valet_parking_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930742979280-v2sji1ep1uhro4sooepgu2ob58i4n8r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYG4CaDb6vLUVpCZg2wzkEAzj47mKdUos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930742979280-v2sji1ep1uhro4sooepgu2ob58i4n8r1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
