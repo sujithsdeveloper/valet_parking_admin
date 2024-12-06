@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:valet_parking_admin/utils/constants/color_constants.dart';
 import 'package:valet_parking_admin/widgets/customSnackbar.dart';
@@ -15,6 +13,7 @@ class Crudoperationcontoller extends ChangeNotifier {
     required String price,
     required String numberOfSlots,
     required String location,
+    required String image,
     required int code,
     required BuildContext context,
   }) async {
@@ -27,7 +26,8 @@ class Crudoperationcontoller extends ChangeNotifier {
         'price_per_hour': price,
         'rating': 4,
         'number_of_slots': numberOfSlots,
-        'code':code
+        'code': code,
+        'image': image
       };
 
       CollectionReference adminStations = FirebaseFirestore.instance
@@ -58,6 +58,55 @@ class Crudoperationcontoller extends ChangeNotifier {
         content: Text('Failed to add station. Please try again.'),
         backgroundColor: Colors.red,
       ));
+    }
+  }
+
+  bool isUpdatingStation = false;
+  Future<void> updateStation({
+    required String stationName,
+    required String price,
+    required String numberOfSlots,
+    required String location,
+    required String image,
+    required String code,
+    required BuildContext context,
+  }) async {
+    isUpdatingStation = true;
+    notifyListeners();
+
+    try {
+      final adminRef = FirebaseFirestore.instance
+          .collection('admins')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection('stations')
+          .doc();
+
+      final parkingPlaceRef =
+          FirebaseFirestore.instance.collection('parking_place').doc();
+
+      final updatedData = {
+        'location': location,
+        'parking_place': stationName,
+        'price_per_hour': price,
+        'rating': 4,
+        'number_of_slots': numberOfSlots,
+        'image': image,
+        'code': code
+      };
+
+      await adminRef.update(updatedData);
+      await parkingPlaceRef.update(updatedData);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackbar(title: 'Station updated successfully!'),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnackbar(title: 'Error updating station: $e'),
+      );
+    } finally {
+      isUpdatingStation = false;
+      notifyListeners();
     }
   }
 

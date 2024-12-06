@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:valet_parking_admin/controller/crudOperationContoller.dart';
-import 'package:valet_parking_admin/controller/widgetController.dart';
 import 'package:valet_parking_admin/utils/constants/color_constants.dart';
 import 'package:valet_parking_admin/utils/functions/validations.dart';
 import 'package:valet_parking_admin/utils/styles/String_styles.dart';
@@ -17,13 +16,15 @@ class Stationaddscreen extends StatefulWidget {
       this.location,
       this.price,
       this.Image,
-      required this.isEdit});
+      required this.isEdit,
+      this.code});
 
   final String? stationName;
   final String? numberOfSlots;
   final String? location;
   final String? price;
   final String? Image;
+  final String? code;
   final bool isEdit;
 
   @override
@@ -41,13 +42,23 @@ class _StationaddscreenState extends State<Stationaddscreen> {
     final codeController = TextEditingController();
     final key = GlobalKey<FormState>();
     final proWatch = context.watch<Crudoperationcontoller>();
+    final proRead = context.read<Crudoperationcontoller>();
+
+    if (widget.isEdit) {
+      stationNameController.text = widget.stationName.toString();
+      numberOfSlotsController.text = widget.numberOfSlots.toString();
+      locationCorrdinates.text = widget.location.toString();
+      pricePerHourController.text = widget.price.toString();
+      imageUrlController.text = widget.Image.toString();
+      codeController.text = widget.code.toString();
+    }
 
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Add Station',
+          widget.isEdit ? 'Edit Your Station' : 'Add Station',
           style: StringStyles.headingStyle(),
         ),
         centerTitle: true,
@@ -115,19 +126,33 @@ class _StationaddscreenState extends State<Stationaddscreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: proWatch.isLoading
+                    child: proWatch.isLoading || proWatch.isUpdatingStation
                         ? AnimationStyles.loadingIndicator()
                         : ButtonWidget(
-                            label: 'Add',
+                            label: widget.isEdit ? 'Save' : 'Add',
                             onTap: () {
                               if (key.currentState!.validate()) {
-                                context.read<Crudoperationcontoller>().addData(
-                                    code: int.parse(codeController.text),
-                                    context: context,
-                                    stationName: stationNameController.text,
-                                    price: pricePerHourController.text,
-                                    numberOfSlots: numberOfSlotsController.text,
-                                    location: locationCorrdinates.text);
+                                if (widget.isEdit) {
+                                  proRead.updateStation(
+                                      image: imageUrlController.text,
+                                      code: codeController.text,
+                                      context: context,
+                                      stationName: stationNameController.text,
+                                      price: pricePerHourController.text,
+                                      numberOfSlots:
+                                          numberOfSlotsController.text,
+                                      location: locationCorrdinates.text);
+                                } else {
+                                  proRead.addData(
+                                      image: imageUrlController.text,
+                                      code: int.parse(codeController.text),
+                                      context: context,
+                                      stationName: stationNameController.text,
+                                      price: pricePerHourController.text,
+                                      numberOfSlots:
+                                          numberOfSlotsController.text,
+                                      location: locationCorrdinates.text);
+                                }
 
                                 stationNameController.clear();
                                 pricePerHourController.clear();
